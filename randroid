@@ -1,0 +1,8 @@
+#!/bin/bash
+set -e
+
+#phonegap platform update android
+phonegap run android
+
+exit
+#EOF
