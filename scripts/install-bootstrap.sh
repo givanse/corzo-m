@@ -24,7 +24,7 @@ cp -v $origin'bootstrap.min.css' $destiny
 # js
 
 origin=$bootstrapFolder'/dist/js/'
-destiny='www/js/'
+destiny='www/js/libs/'
 cp -v $origin'bootstrap.js' $destiny
 cp -v $origin'bootstrap.min.js' $destiny
 
