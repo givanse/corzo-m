@@ -1,9 +1,14 @@
 
+www/icon.png
 
 www/css/bootstrap.css
 www/css/bootstrap.min.css
 www/css/normalize.css
-www/css/jquery.mobile-1.4.2.css
+www/css/ember-animated-outlet.css
 
 www/js/libs/
+
+www/fonts/
+
+
 
