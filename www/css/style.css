@@ -1,0 +1,71 @@
+
+html, body, .ember-view  {
+    width: 99%;
+    height: 99%;
+    margin: auto;
+    font-size: 1.1em;
+}
+
+.ember-view {
+    padding: 3px;
+}
+
+#servicedetails {
+}
+
+table {
+    width: 90%;
+}
+
+td {
+    border: 1px solid #afafaf;
+    border-width: 0px 0px 3px 0px;
+    padding: 2px 8px 2px 8px;
+}
+
+tr > td:first-child {
+    border: 1px solid #afafaf;
+    border-width: 0px 1px 0px 0px;
+    text-align: right;
+}
+
+/* Context menu */
+div.contextmenu {
+    height: 100%;
+    z-index: 10000;
+    background: transparent;
+}
+
+li:nth-child(2n+1) {
+    background-color: #e0e0e0;
+}
+
+/* Map canvas */
+div#mapcanvas {
+    position: relative;
+    width: 99%;
+    height: 99%;
+    background: transparent url('../img/maptile.png') repeat right top;
+    text-align: center;
+}
+
+#mapcanvas div#driverstatus {
+    margin-top: 10px;
+}
+
+#mapcanvas div#driverstatus > select {
+    width: 200px;
+}
+
+#mapcanvas div#address {
+    position: absolute;
+    bottom: 10px;
+    width: 100%;
+    color: #00ff00;
+    background-color: #000000;
+    font-family: monospace;
+    border-radius: 7px;
+    padding: 4px 2px 8px 2px;
+}
+
+/*EOF*/

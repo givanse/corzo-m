@@ -7,31 +7,92 @@
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
 
         <link rel="stylesheet" href="css/normalize.css">
-        <link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.4.2.css" />
         <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
         <link rel="stylesheet" type="text/css" href="css/style.css" />
         <title>Base App</title>
     </head>
     <body>
         <script type="text/x-handlebars">
-            <h2>Welcome to Phonegap/Ember/Bootstrap</h2>
-
             {{outlet}}
         </script>
 
         <script type="text/x-handlebars" id="index">
-            <div class="row">
-            {{#each item in model}}
-                <div class="col-xs-4">
-                    <img src="img/yourlogo.png" class="img-responsive" alt="List item icon">
-                    {{item}}
+            {{context-menu}}
+
+            <div id="mapcanvas">
+
+                <div class="row">
+                    <div class="col-xs-1 col-md-4"></div>
+                    <div id="driverstatus" class="col-xs-10 col-md-4">
+                        <select>
+                            <option>Disponible</option>
+                            <option>Trabajando</option>
+                            <option>Inactivo</option>
+                        </select>
+                    </div>
+                    <div class="col-xs-1 col-md-4"></div>
                 </div>
-            {{/each}}
+
+                <div class="row">
+                    <div class="col-xs-1 col-md-3"></div>
+                    <div id="address" class="col-xs-10 col-md-6">
+                        Paseo Loma Larga #4348 Casa 12<br>
+                        Fachada de enredaderas.
+                    </div>
+                    <div class="col-xs-1 col-md-3"></div>
+                </div>
+
             </div>
+        
+            {{view App.ServiceDetailsView}}
+        </script>
+
+        <!-- TODO: make it an Ember component -->
+        <script type="text/x-handlebars" id="components/context-menu">
+            <div class="col-xs-6 col-md-6">
+                <ul class="nav nav-pills nav-stacked">
+                    <li>{{#link-to 'index'}}Mapa{{/link-to}}</li>
+                    <li>{{#link-to 'my_account'}}Mi Cuenta{{/link-to}}</li>
+                    <li>{{#link-to 'preferences'}}Preferencias{{/link-to}}</li>
+                    <li>{{#link-to ''}}Salir{{/link-to}}</li>
+                </ul>
+            </div>
+            <div class="col-xs-6 col-md-6"></div>
+        </script>
+
+        <script type="text/x-handlebars" id="servicedetails">
+            <h1>Servicio Actual</h1>
+            <table>
+                <tr><td>Cliente</td><td>Laura Flores</td></tr>
+                <tr><td>Origen</td><td>Galeanas 134</td></tr>
+                <tr><td>Destino</td><td>Av. Americas 150</td></tr>
+                <tr><td>Notas</td><td>Reja blanca, no funciona el timbre.</td></tr>
+            </table> 
+        </script>
+
+        <script type="text/x-handlebars" id="my_account">
+            {{context-menu}}
+            <h1>Mi Cuenta</h1>
+            <table>
+                <tr><td>Nombre</td><td>Juan Camaney</td></tr>
+                <tr><td>Celular</td><td>33 1234 0000</td></tr>
+                <tr><td>Licencia</td><td>678345</td></tr>
+                <tr><td>Vehiculo</td><td>ABC 123</td></tr>
+            </table> 
+        </script>
+
+        <script type="text/x-handlebars" id="preferences">
+            {{context-menu}}
+            <h1>Preferencias</h1>
+            <table>
+                <tr><td>Aceptar trabajo</td><td>Automatico</td></tr>
+                <tr><td>Mostrar ruta</td><td>si</td></tr>
+                <tr><td>Mostrar notas</td><td>si</td></tr>
+                <tr><td>Ocultar status al trabajar</td><td>si</td></tr>
+            </table> 
         </script>
 
         <script src="js/libs/jquery-1.10.2.js"></script>
-        <script src="js/libs/jquery.mobile-1.4.2.js"></script>
         <script src="js/libs/handlebars-1.1.2.js"></script>
         <script src="js/libs/ember-1.5.1.js"></script>
         <script src="js/libs/bootstrap.js"></script>
