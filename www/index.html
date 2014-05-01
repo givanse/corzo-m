@@ -8,61 +8,72 @@
 
         <link rel="stylesheet" href="css/normalize.css">
         <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
+        <link rel="stylesheet" type="text/css" href="css/ember-animated-outlet.css" />
         <link rel="stylesheet" type="text/css" href="css/style.css" />
         <title>Base App</title>
     </head>
     <body>
+        
         <script type="text/x-handlebars">
-            {{outlet}}
+            {{context-menu id="contextmenu"}}
+
+            <table id="layout">
+            <tbody>
+                <tr id="actionbar">
+                    <td>
+                        <div class="container">
+                            <div class="row">
+                                <div id="contextmenu-button" class="col-xs-2 col-md-1">
+                                    <span class="glyphicon glyphicon-th"></span>
+                                </div>
+                                <div class="col-xs-10 col-md-11">
+                                    <select id="driverstatus">
+                                        <option>Disponible</option>
+                                        <option>Inactivo</option>
+                                        <option>Trabajando</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="position: relative;">
+                        <div class="container">
+                            <div class="row">
+                                {{animated-outlet name="main"}}
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+            </table>
         </script>
 
         <script type="text/x-handlebars" id="index">
-            {{context-menu}}
-
-            <div id="mapcanvas">
-
-                <div class="row">
-                    <div class="col-xs-1 col-md-4"></div>
-                    <div id="driverstatus" class="col-xs-10 col-md-4">
-                        <select>
-                            <option>Disponible</option>
-                            <option>Trabajando</option>
-                            <option>Inactivo</option>
-                        </select>
-                    </div>
-                    <div class="col-xs-1 col-md-4"></div>
-                </div>
-
-                <div class="row">
-                    <div class="col-xs-1 col-md-3"></div>
-                    <div id="address" class="col-xs-10 col-md-6">
-                        Paseo Loma Larga #4348 Casa 12<br>
-                        Fachada de enredaderas.
-                    </div>
-                    <div class="col-xs-1 col-md-3"></div>
-                </div>
-
-            </div>
-        
-            {{view App.ServiceDetailsView}}
+            <div id="mapcanvas"></div>
         </script>
 
-        <!-- TODO: make it an Ember component -->
         <script type="text/x-handlebars" id="components/context-menu">
-            <div class="col-xs-6 col-md-6">
                 <ul class="nav nav-pills nav-stacked">
-                    <li>{{#link-to 'index'}}Mapa{{/link-to}}</li>
-                    <li>{{#link-to 'my_account'}}Mi Cuenta{{/link-to}}</li>
-                    <li>{{#link-to 'preferences'}}Preferencias{{/link-to}}</li>
-                    <li>{{#link-to ''}}Salir{{/link-to}}</li>
+                    <li>{{#link-to-animated 'index' animations="main:slideOverUp"}}
+                        Mapa
+                    {{/link-to-animated}}</li>
+                    <li>{{#link-to-animated 'my_account' animations="main:slideOverUp"}}
+                        Mi Cuenta
+                    {{/link-to-animated}}</li>
+                    <li>{{#link-to-animated 'preferences' animations="main:slideOverUp"}}
+                        Preferencias
+                    {{/link-to-animated}}</li>
+                    <li>{{#link-to-animated '' animations="main:slideOverUp"}}
+                        Salir
+                    {{/link-to-animated}}</li>
                 </ul>
-            </div>
-            <div class="col-xs-6 col-md-6"></div>
         </script>
 
         <script type="text/x-handlebars" id="servicedetails">
             <h1>Servicio Actual</h1>
-            <table>
+            <table class="data-list">
                 <tr><td>Cliente</td><td>Laura Flores</td></tr>
                 <tr><td>Origen</td><td>Galeanas 134</td></tr>
                 <tr><td>Destino</td><td>Av. Americas 150</td></tr>
@@ -71,9 +82,8 @@
         </script>
 
         <script type="text/x-handlebars" id="my_account">
-            {{context-menu}}
             <h1>Mi Cuenta</h1>
-            <table>
+            <table class="data-list">
                 <tr><td>Nombre</td><td>Juan Camaney</td></tr>
                 <tr><td>Celular</td><td>33 1234 0000</td></tr>
                 <tr><td>Licencia</td><td>678345</td></tr>
@@ -82,9 +92,8 @@
         </script>
 
         <script type="text/x-handlebars" id="preferences">
-            {{context-menu}}
             <h1>Preferencias</h1>
-            <table>
+            <table class="data-list">
                 <tr><td>Aceptar trabajo</td><td>Automatico</td></tr>
                 <tr><td>Mostrar ruta</td><td>si</td></tr>
                 <tr><td>Mostrar notas</td><td>si</td></tr>
@@ -96,13 +105,14 @@
         <script src="js/libs/handlebars-1.1.2.js"></script>
         <script src="js/libs/ember-1.5.1.js"></script>
         <script src="js/libs/bootstrap.js"></script>
+        <script src="js/libs/ember-animated-outlet.js"></script>
 
-        <script type="text/javascript" src="phonegap.js"></script>
+        <!--script type="text/javascript" src="phonegap.js"></script-->
         <script type="text/javascript" src="js/index.js"></script>
         <script src="js/app.js"></script> <!-- ember -->
 
         <script type="text/javascript">
-            app.initialize();
+            app.initialize(); <!-- phonegap -->
         </script>
         <!-- to activate the test runner, add the "?test" query string parameter -->
         <script src="tests/runner.js"></script>

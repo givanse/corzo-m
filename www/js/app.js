@@ -1,9 +1,13 @@
+/**
+ *
+ */
+
 App = Ember.Application.create();
 
 App.Router.map(function() {
-    this.resource("service_details");
-    this.resource("my_account");
-    this.resource("preferences");
+    this.route("service_details");
+    this.route("my_account");
+    this.route("preferences");
 });
 
 App.IndexRoute = Ember.Route.extend({
@@ -12,20 +16,33 @@ App.IndexRoute = Ember.Route.extend({
   }
 });
 
+App.IndexView = Ember.View.extend({
+    didInsertElement: function() {
+        App.hideContextMenu();
+    }
+});
+
 App.ServiceDetailsView = Ember.View.extend({
-    templateName: 'servicedetails'
 });
 
 App.MyAccountView = Ember.View.extend({
-    templateName: 'my_account'
+    didInsertElement: function() {
+        App.hideContextMenu();
+    }
 });
 
 App.PreferencesView = Ember.View.extend({
-    templateName: 'preferences'
+    didInsertElement: function() {
+        App.hideContextMenu();
+    }
 });
 
 App.ContextMenuComponent = Ember.Component.extend({
-  classNames: ['row', 'contextmenu']
 });
+
+App.hideContextMenu = function () {
+    //$("div#contextmenu").hide();
+    //$("div#contextmenu div:first-child").animate({width: 'toggle'});
+};
 
 /*EOF*/
