@@ -1,34 +1,42 @@
 
-html, body {
-    height: 100%;
-}
-
 td {
     padding: 0px;
 }
 
 .ember-view {
     background-color: #ffffff;
+}
+
+html,
+body,
+.ember-view,
+table#layout,
+table#layout tr#actionbar,
+table#layout tr#content,
+table#layout tr#actionbar > td,
+table#layout tr#content > td {
+    width: 100%;
+}
+
+html,
+body,
+.ember-view,
+table#layout,
+table#layout tr#content,
+table#layout tr#content > td {
     height: 100%;
 }
 
-table#layout {
-    width: 100%;
-    height: 100%;
+table#layout tr#content > td {
+    font-size: 150%;
 }
 
 /* Map canvas */
-table#layout,
-table#layout tr#content,
-table#layout tr#content td ,
-table#layout tr#content td div.ember-view,
-#mapcanvas {
-    height: 100%;
-}
 #mapcanvas {
     background: transparent url('../img/maptile.png') repeat right top;
-    font-family: monospace;
     color: #00ff00;
+    width: 100%;
+    height: 100%;
 }
 
 #mapcanvas div#address {
@@ -39,22 +47,27 @@ table#layout tr#content td div.ember-view,
 }
 
 /* */
-.data-list td {
-    border: 1px solid #afafaf;
-    border-width: 0px 0px 3px 0px;
+table.data-list {
+    width: 98%;
+    margin: auto;
+}
+table.data-list td {
     padding: 2px 8px 2px 8px;
 }
 
-.data-list tr > td:first-child {
-    border: 1px solid #afafaf;
-    border-width: 0px 1px 0px 0px;
+table.data-list tr > td:first-child {
     text-align: right;
+}
+
+table.data-list tr > td:nth-child(2) {
+    border: 1px solid #afafaf;
+    border-width: 0px 1px 3px 1px;
 }
 
 /* Context menu */
 #contextmenu {
     position: absolute;
-    width: 250px;
+    width: 60%;
     height: 100%;
     z-index: 9000;
     background-color: #ffd8f9;
@@ -65,32 +78,35 @@ table#layout tr#content td div.ember-view,
 }
 
 #contextmenu li {
-    border: 1px solid #afafaf;
-    border-width: 0px 0px 1px 0px;
+    margin: 0px;
+    border: 1px solid #7BFA9B;
+    border-top-color: #D5FFD3;
+    border-width: 3px 0px 2px 0px;
 }
 
 #contextmenu .nav-pills > li > a {
+    padding-left: 24px;
     border-radius: 0px;
 }
 
 #contextmenu ul li a {
     background-color: #abffc0;
     color: #242424;
+    font-size: 150%;
 }
 
 #contextmenu ul li a.active {
-    background-color: #000000;
-    color: #00ff00;
+    background-color: #D0F9FF;
+    color: #242424;
 }
 
-/* Table layout */
+/* Action bar */
 #actionbar {
-    height: 50px;
+    height: 128px;
     background-color: #000000;
-    line-height: 50px;
     text-align: center;
     color: #ffffff;
-    font-size: 25px;
+    font-size: 200%;
     z-index: 8000;
 }
 
@@ -100,12 +116,41 @@ table#layout tr#content td div.ember-view,
 }
 
 #actionbar #contextmenu-button > span {
-    padding: 2px 4px 4px 0px;
-    font-size: 35px;
+    padding: 0px 24px 0px 0px;
+    font-size: 200%;
 }
 
 #actionbar select#driverstatus {
+    margin-top: 3%;
     width: 200px;
+}
+
+/* Low density (120), 1dpi */
+@media screen and (-webkit-min-device-pixel-ratio: 0.75) {
+    #actionbar {
+        height: 24px;
+    }
+}
+
+/* Medium density (160), mdpi */
+@media screen and (-webkit-min-device-pixel-ratio: 1) {
+    #actionbar {
+        height: 32px;
+    }
+}
+
+/* High density (240), hdpi */
+@media screen and (-webkit-min-device-pixel-ratio: 1.5) {
+    #actionbar {
+        height: 48px;
+    }
+}
+
+/* Extra high density (320), xhdpi */
+@media screen and (-webkit-min-device-pixel-ratio: 2) {
+    #actionbar {
+        height: 64px;
+    }
 }
 
 /*EOF*/

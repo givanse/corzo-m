@@ -19,12 +19,7 @@ var app = {
             });
 
             $("#contextmenu ul li").click(function () { 
-                var li$ = $(this);
-                li$.fadeTo(250, 0.6, function () {
-                    ctxMenu$.animate({width: 'toggle'}, function () {
-                        li$.fadeTo(1, 1);
-                    });
-                });
+                ctxMenu$.animate({width: 'toggle'});
             });
         });
     },
