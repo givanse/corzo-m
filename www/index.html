@@ -8,7 +8,6 @@
 
         <link rel="stylesheet" href="css/normalize.css">
         <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
-        <link rel="stylesheet" type="text/css" href="css/ember-animated-outlet.css" />
         <link rel="stylesheet" type="text/css" href="css/style.css" />
         <title>Base App</title>
     </head>
@@ -37,13 +36,9 @@
                         </div>
                     </td>
                 </tr>
-                <tr>
-                    <td style="position: relative;">
-                        <div class="container">
-                            <div class="row">
-                                {{animated-outlet name="main"}}
-                            </div>
-                        </div>
+                <tr id="content">
+                    <td>
+                        {{outlet}}
                     </td>
                 </tr>
             </tbody>
@@ -56,18 +51,18 @@
 
         <script type="text/x-handlebars" id="components/context-menu">
                 <ul class="nav nav-pills nav-stacked">
-                    <li>{{#link-to-animated 'index' animations="main:slideOverUp"}}
+                    <li>{{#link-to 'index' animations="main:slideOverUp"}}
                         Mapa
-                    {{/link-to-animated}}</li>
-                    <li>{{#link-to-animated 'my_account' animations="main:slideOverUp"}}
+                    {{/link-to}}</li>
+                    <li>{{#link-to 'my_account' animations="main:slideOverUp"}}
                         Mi Cuenta
-                    {{/link-to-animated}}</li>
-                    <li>{{#link-to-animated 'preferences' animations="main:slideOverUp"}}
+                    {{/link-to}}</li>
+                    <li>{{#link-to 'preferences' animations="main:slideOverUp"}}
                         Preferencias
-                    {{/link-to-animated}}</li>
-                    <li>{{#link-to-animated '' animations="main:slideOverUp"}}
+                    {{/link-to}}</li>
+                    <li>{{#link-to '' animations="main:slideOverUp"}}
                         Salir
-                    {{/link-to-animated}}</li>
+                    {{/link-to}}</li>
                 </ul>
         </script>
 
@@ -105,7 +100,6 @@
         <script src="js/libs/handlebars-1.1.2.js"></script>
         <script src="js/libs/ember-1.5.1.js"></script>
         <script src="js/libs/bootstrap.js"></script>
-        <script src="js/libs/ember-animated-outlet.js"></script>
 
         <!--script type="text/javascript" src="phonegap.js"></script-->
         <script type="text/javascript" src="js/index.js"></script>

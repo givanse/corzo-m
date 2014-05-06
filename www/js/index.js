@@ -20,9 +20,10 @@ var app = {
 
             $("#contextmenu ul li").click(function () { 
                 var li$ = $(this);
-                li$.fadeTo(250, 0.1, function () {
-                    ctxMenu$.animate({width: 'toggle'});
-                    li$.fadeTo(1, 1);
+                li$.fadeTo(250, 0.6, function () {
+                    ctxMenu$.animate({width: 'toggle'}, function () {
+                        li$.fadeTo(1, 1);
+                    });
                 });
             });
         });

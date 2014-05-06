@@ -3,6 +3,10 @@ html, body {
     height: 100%;
 }
 
+td {
+    padding: 0px;
+}
+
 .ember-view {
     background-color: #ffffff;
     height: 100%;
@@ -14,8 +18,10 @@ table#layout {
 }
 
 /* Map canvas */
-.container,
-.container .row,
+table#layout,
+table#layout tr#content,
+table#layout tr#content td ,
+table#layout tr#content td div.ember-view,
 #mapcanvas {
     height: 100%;
 }
