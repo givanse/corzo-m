@@ -2,6 +2,9 @@
 set -e
 
 #phonegap platform update android
+#phonegap plugin add org.apache.cordova.geolocation
+#cordova plugin ls
+
 phonegap run android
 
 exit

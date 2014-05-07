@@ -77,12 +77,25 @@
         </script>
 
         <script type="text/x-handlebars" id="my_account">
+            <h1>Ultima Ubicacion</h1>
+            <table class="data-list">
+                <tr><td>Fecha</td><td>{{geopos.timestamp}}</td></tr>
+                <tr><td>Precisión</td><td>{{geopos.coords.accuracy}}</td></tr>
+                <tr><td>Altitud</td><td>{{geopos.coords.altitude}}</td></tr>
+                <tr><td>Altitud precisión</td><td>{{geopos.coords.altitudeAccuracy}}</td></tr>
+                <tr><td>Dirección</td><td>{{geopos.coords.heading}}</td></tr>
+                <tr><td>Latitud</td><td>{{geopos.coords.latitude}}</td></tr>
+                <tr><td>Longitud</td><td>{{geopos.coords.longitude}}</td></tr>
+                <tr><td>Velocidad</td><td>{{geopos.coords.speed}}</td></tr>
+                <tr><td>{{message}}</td></tr>
+            </table> 
+
             <h1>Mi Cuenta</h1>
             <table class="data-list">
-                <tr><td>Nombre</td><td>Juan Camaney</td></tr>
-                <tr><td>Celular</td><td>33 1234 0000</td></tr>
-                <tr><td>Licencia</td><td>678345</td></tr>
-                <tr><td>Vehiculo</td><td>ABC 123</td></tr>
+                <tr><td>Nombre</td><td>{{model.name}}</td></tr>
+                <tr><td>Celular</td><td>{{model.cellphone}}</td></tr>
+                <tr><td>Licencia</td><td>{{model.license}}</td></tr>
+                <tr><td>Vehiculo</td><td>{{model.plate}}</td></tr>
             </table> 
         </script>
 

@@ -11,12 +11,14 @@ var app = {
     // 'load', 'deviceready', 'offline', and 'online'.
     bindEvents: function() {
         //document.addEventListener('deviceready', this.onDeviceReady, false);
+        this.onDeviceReady();
         $(document).ready(function() {
             var ctxMenu$ = $("div#contextmenu");
 
             $("#contextmenu-button").click(function () { 
                 ctxMenu$.animate({width: 'toggle'});
             });
+            ctxMenu$.animate({width: 'toggle'});
 
             $("#contextmenu ul li").click(function () { 
                 ctxMenu$.animate({width: 'toggle'});
