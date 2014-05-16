@@ -1,44 +1,33 @@
 
-td {
-    padding: 0px;
-}
-
 .ember-view {
     background-color: #ffffff;
 }
 
 html,
 body,
-.ember-view,
-table#layout,
-table#layout tr#actionbar,
-table#layout tr#content,
-table#layout tr#actionbar > td,
-table#layout tr#content > td {
+.ember-fulls-view,
+.container-fulls,
+#actionbar,
+#content {
     width: 100%;
+    margin: 0;
 }
 
 html,
 body,
-.ember-view,
-table#layout,
-table#layout tr#content,
-table#layout tr#content > td {
+.ember-fulls-view,
+.container-fulls,
+#content {
     height: 100%;
 }
 
-table#layout tr#content > td {
-    font-size: 150%;
-}
-
 /* Map canvas */
-#mapcanvas {
-    background: transparent url('../img/maptile.png') repeat right top;
-    color: #00ff00;
+#map-canvas {
     width: 100%;
     height: 100%;
 }
 
+/*TODO: custom map control */
 #mapcanvas div#address {
     bottom: 10px;
     background-color: #000000;
@@ -46,22 +35,28 @@ table#layout tr#content > td {
     padding: 4px 2px 8px 2px;
 }
 
-/* */
-table.data-list {
-    width: 98%;
-    margin: auto;
-}
-table.data-list td {
-    padding: 2px 8px 2px 8px;
+/* components/data-row */
+
+div.data-row {
+    padding: 30px 0px;
+    margin-left: 10%;
+    margin-right: 10%;
 }
 
-table.data-list tr > td:first-child {
-    text-align: right;
+div.title, div.data {
+    float: left;
+    padding: 4px 8px;
 }
 
-table.data-list tr > td:nth-child(2) {
+div.title {
+    width: 40%;
+}
+
+div.data {
+    width: 60%;
     border: 1px solid #afafaf;
     border-width: 0px 1px 3px 1px;
+    text-align: center;
 }
 
 /* Context menu */
@@ -70,7 +65,7 @@ table.data-list tr > td:nth-child(2) {
     width: 60%;
     height: 100%;
     z-index: 9000;
-    background-color: #ffd8f9;
+    background-color: #3A5239;
 }
 
 #contextmenu ul {
@@ -92,7 +87,7 @@ table.data-list tr > td:nth-child(2) {
 #contextmenu ul li a {
     background-color: #abffc0;
     color: #242424;
-    font-size: 150%;
+    font-size: 125%;
 }
 
 #contextmenu ul li a.active {
@@ -106,50 +101,74 @@ table.data-list tr > td:nth-child(2) {
     background-color: #000000;
     text-align: center;
     color: #ffffff;
-    font-size: 200%;
+    font-size: 100%;
     z-index: 8000;
 }
 
-#actionbar #contextmenu-button {
+#actionbar #button-wrapper {
     border: 1px solid #a0a0a0;
     border-width: 0px 1px 0px 0px;
-}
-
-#actionbar #contextmenu-button > span {
-    padding: 0px 24px 0px 0px;
-    font-size: 200%;
+    height: 100%;
 }
 
 #actionbar select#driverstatus {
-    margin-top: 3%;
-    width: 200px;
+    margin-top: 10px;
+    width: 62%;
+    font-size: 125%;
+}
+
+#actionbar {
+    height: 10%;
+}
+#content {
+    height: 90%;
 }
 
 /* Low density (120), 1dpi */
 @media screen and (-webkit-min-device-pixel-ratio: 0.75) {
-    #actionbar {
-        height: 24px;
+    .container-fulls {
+        font-size: 75%;
     }
 }
 
 /* Medium density (160), mdpi */
 @media screen and (-webkit-min-device-pixel-ratio: 1) {
-    #actionbar {
-        height: 32px;
+    .container-fulls {
+        font-size: 100%;
     }
 }
 
 /* High density (240), hdpi */
 @media screen and (-webkit-min-device-pixel-ratio: 1.5) {
-    #actionbar {
-        height: 48px;
+    .container-fulls {
+        font-size: 150%;
     }
 }
 
 /* Extra high density (320), xhdpi */
 @media screen and (-webkit-min-device-pixel-ratio: 2) {
-    #actionbar {
-        height: 64px;
+    .container-fulls {
+        font-size: 200%;
+    }
+}
+
+/* Action bar height */
+
+@media screen and (max-height: 640px) {
+    body {
+        font-size: 14px;
+    }
+    #actionbar #button-wrapper > span {
+        font-size: 200%;
+    }
+}
+
+@media screen and (min-height: 641px) {
+    body {
+        font-size: 21px;
+    }
+    #actionbar #button-wrapper > span {
+        font-size: 300%;
     }
 }
 
