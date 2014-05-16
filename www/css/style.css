@@ -6,7 +6,7 @@
 html,
 body,
 .ember-fulls-view,
-.container-fulls,
+#container-fulls,
 #actionbar,
 #content {
     width: 100%;
@@ -16,7 +16,7 @@ body,
 html,
 body,
 .ember-fulls-view,
-.container-fulls,
+#container-fulls,
 #content {
     height: 100%;
 }
@@ -25,6 +25,8 @@ body,
 #map-canvas {
     width: 100%;
     height: 100%;
+    border: 1px solid black;
+    background-color: gray;
 }
 
 /*TODO: custom map control */
@@ -87,7 +89,6 @@ div.data {
 #contextmenu ul li a {
     background-color: #abffc0;
     color: #242424;
-    font-size: 125%;
 }
 
 #contextmenu ul li a.active {
@@ -101,7 +102,6 @@ div.data {
     background-color: #000000;
     text-align: center;
     color: #ffffff;
-    font-size: 100%;
     z-index: 8000;
 }
 
@@ -114,7 +114,6 @@ div.data {
 #actionbar select#driverstatus {
     margin-top: 10px;
     width: 62%;
-    font-size: 125%;
 }
 
 #actionbar {
@@ -126,29 +125,29 @@ div.data {
 
 /* Low density (120), 1dpi */
 @media screen and (-webkit-min-device-pixel-ratio: 0.75) {
-    .container-fulls {
+    .rtext {
         font-size: 75%;
     }
 }
 
 /* Medium density (160), mdpi */
 @media screen and (-webkit-min-device-pixel-ratio: 1) {
-    .container-fulls {
+    .rtext {
         font-size: 100%;
     }
 }
 
 /* High density (240), hdpi */
 @media screen and (-webkit-min-device-pixel-ratio: 1.5) {
-    .container-fulls {
+    .rtext {
         font-size: 150%;
     }
 }
 
 /* Extra high density (320), xhdpi */
 @media screen and (-webkit-min-device-pixel-ratio: 2) {
-    .container-fulls {
-        font-size: 200%;
+    .rtext {
+        font-size: 250%;
     }
 }
 
@@ -158,8 +157,8 @@ div.data {
     body {
         font-size: 14px;
     }
-    #actionbar #button-wrapper > span {
-        font-size: 200%;
+    #button-wrapper {
+        font-size: 28px;
     }
 }
 
@@ -167,8 +166,8 @@ div.data {
     body {
         font-size: 21px;
     }
-    #actionbar #button-wrapper > span {
-        font-size: 300%;
+    #button-wrapper {
+        font-size: 42px;
     }
 }
 

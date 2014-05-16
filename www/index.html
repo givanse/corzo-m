@@ -14,11 +14,19 @@
     <body>
         
         <script type="text/x-handlebars">
-            {{context-menu id="contextmenu"}}
+            <div id="contextmenu" class="rtext">
+                <ul class="nav nav-pills nav-stacked">
+                    {{ctx-menu-item routeName='index' displayName='Mapa'}}
+                    {{ctx-menu-item routeName='monitor' displayName='Monitor GPS'}}
+                    {{ctx-menu-item routeName='account' displayName='Mi Cuenta'}}
+                    {{ctx-menu-item routeName='preferences' displayName='Preferencias'}}
+                    {{ctx-menu-item routeName='' displayName='Salir'}}
+                </ul>
+            </div>
 
-            <div class="container-fulls">
+            <div id="container-fulls" class="rtext">
                 <div id="actionbar" class="row">
-                   <div id="button-wrapper" class="col-xs-3 col-md-1">
+                   <div {{action 'toggleCtxMenu'}} id="button-wrapper" class="col-xs-3 col-md-1">
                       <span class="glyphicon glyphicon-th"></span>
                    </div>
                    <div class="col-xs-9 col-md-11">
@@ -29,44 +37,19 @@
                        </select>
                    </div>
                 </div>
+
                 <div id="content" class="row">
                     {{outlet}}
                 </div>
             </div>
         </script>
 
-        <script type="text/x-handlebars" id="components/context-menu">
-                <ul class="nav nav-pills nav-stacked">
-                    <li>
-                    {{#link-to 'index' animations="main:slideOverUp"}}
-                        Mapa
-                    {{/link-to}}
-                    </li>
-
-                    <li>
-                    {{#link-to 'monitor' animations="main:slideOverUp"}}
-                        Monitor GPS 
-                    {{/link-to}}
-                    </li>
-
-                    <li>
-                    {{#link-to 'account' animations="main:slideOverUp"}}
-                        Mi Cuenta
-                    {{/link-to}}
-                    </li>
-
-                    <li>
-                    {{#link-to 'preferences' animations="main:slideOverUp"}}
-                        Preferencias
-                    {{/link-to}}
-                    </li>
-
-                    <li>
-                    {{#link-to '' animations="main:slideOverUp"}}
-                        Salir
-                    {{/link-to}}
-                    </li>
-                </ul>
+        <script type="text/x-handlebars" id="components/ctx-menu-item">
+            {{#link-to routeName animations="main:slideOverUp"}}
+                <div {{action 'click'}}>
+                    {{displayName}}
+                </div>
+            {{/link-to}}
         </script>
 
         <script type="text/x-handlebars" id="account">
@@ -112,22 +95,20 @@
             <div class='data-row'>
                 <div class='title'>{{title}}</div>
                 <div class='data'>{{data}}</div>
+                <div style='clear: both;'></div>
             </div>
         </script>
 
-        <!--script type="text/javascript" src="phonegap.js"></script-->
+        <script type="text/javascript" src="phonegap.js"></script>
         <script src="js/libs/jquery-1.10.2.js"></script>
         <script src="js/libs/handlebars-1.1.2.js"></script>
         <script src="js/libs/ember-1.5.1.js"></script>
         <script src="js/libs/bootstrap.js"></script>
-        <script type="text/javascript"
-                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDBlGDVvFbD4gIC4l6G-E6bZVQlSi2GTic&sensor=true"></script>
+        <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDBlGDVvFbD4gIC4l6G-E6bZVQlSi2GTic&sensor=true"></script>
         <script src="//google-maps-utility-library-v3.googlecode.com/svn/trunk/geolocationmarker/src/geolocationmarker-compiled.js"></script>
-        <script src="js/app.js"></script>
-        <script type="text/javascript" src="js/index.js"></script>
-
+        <script src="js/index.js"></script>
         <script type="text/javascript">
-            app.initialize(); <!-- phonegap -->
+            phonegap.initialize();
         </script>
         <!-- to activate the test runner, add the "?test" query string parameter -->
         <script src="tests/runner.js"></script>
