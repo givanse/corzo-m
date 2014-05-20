@@ -9,6 +9,7 @@
         <link rel="stylesheet" href="css/normalize.css">
         <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
         <link rel="stylesheet" type="text/css" href="css/style.css" />
+        <link rel="stylesheet" type="text/css" href="js/gpsmap/style.css" />
         <title>GPS Monitor</title>
     </head>
     <body>
@@ -63,7 +64,7 @@
             {{data-row title='Cliente' data=model.name}}
             {{data-row title='Origen' data=model.cellphone}}
             {{data-row title='Destino' data=model.license}}
-            {{data-row title='Comentariso' data=model.plate}}
+            {{data-row title='Comentarios' data=model.plate}}
         </script>
 
         <script type="text/x-handlebars" id="index">
@@ -81,7 +82,7 @@
             {{data-row title='Latitud' data=coords.latitude}}
             {{data-row title='Longitud' data=coords.longitude}}
             {{data-row title='Velocidad' data=coords.speed}}
-            {{data-row title='Notificacion' data=message}}
+            {{data-row title='Status' data=message}}
         </script>
 
         <script type="text/x-handlebars" id="preferences">
@@ -99,18 +100,21 @@
             </div>
         </script>
 
-        <script type="text/javascript" src="phonegap.js"></script>
+        <!--script type="text/javascript" src="phonegap.js"></script-->
         <script src="js/libs/jquery-1.10.2.js"></script>
         <script src="js/libs/handlebars-1.1.2.js"></script>
         <script src="js/libs/ember-1.5.1.js"></script>
         <script src="js/libs/bootstrap.js"></script>
         <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDBlGDVvFbD4gIC4l6G-E6bZVQlSi2GTic&sensor=true"></script>
-        <script src="//google-maps-utility-library-v3.googlecode.com/svn/trunk/geolocationmarker/src/geolocationmarker-compiled.js"></script>
+        <script src="js/gpsmap/gpsmap.js"></script>
+        <script src="js/gpsmap/Control.js"></script>
+        <script src="js/gpsmap/Marker.js"></script>
+
         <script src="js/index.js"></script>
         <script type="text/javascript">
             phonegap.initialize();
         </script>
-        <!-- to activate the test runner, add the "?test" query string parameter -->
+
         <script src="tests/runner.js"></script>
     </body>
 </html>

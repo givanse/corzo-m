@@ -1,0 +1,16 @@
+#!/bin/bash
+set -e
+
+cd www/js
+git clone git@github.com:givanse/gpsmap.git
+cd -
+
+phonegap plugin add org.apache.cordova.geolocation
+phonegap plugin add org.apache.cordova.device-orientation
+phonegap plugin add org.apache.cordova.device-motion
+
+phonegap platform update android
+cordova plugin ls
+
+exit
+#EOF

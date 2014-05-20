@@ -1,8 +1,9 @@
 /**
- *
+ * 
  */
 
-App = null;
+var App = Ember.Application.create();
+App.deferReadiness();
 
 var phonegap = {
     // Application Constructor
@@ -14,19 +15,14 @@ var phonegap = {
     // 'load', 'deviceready', 'offline', and 'online'.
     bindEvents: function () {
         // Phone
-        document.addEventListener('deviceready', this.onDeviceReady, false);
+        //document.addEventListener('deviceready', this.onDeviceReady, false);
         // Desktop
-        //$(document).ready(function() { phonegap.onDeviceReady(); });
+        $(document).ready(function() { phonegap.onDeviceReady(); });
     },
-    // The scope of 'this' is the event. In order to call the 'receivedEvent'
-    // function, we must explicity call 'app.receivedEvent(...);'
     onDeviceReady: function () {
-        App = Ember.Application.create();
-        configEmberApp();
+        App.advanceReadiness();
     }
-}; // phonegap
-
-function configEmberApp() {
+};
 
 App.Router.map(function() {
     this.route("account");
@@ -64,72 +60,32 @@ App.ApplicationController = Ember.Controller.extend({
   }
 });
 
+/**
+ * Code roadmap:
+ *
+ * IndexController
+ *     init()
+ *         watchPosition()          <- asynchronous
+ *             geolocationSuccess()
+ *                 updateMap() 
+ *
+ * IndexView
+ *     didInsertElement()
+ *         IndexController
+ *             initGoogleMap()
+ *                 tilesloaded
+ *                     initGoogleMapCtrls()
+ */
 App.IndexController = Ember.Controller.extend({
-    init: function () { 
-        this._super();
 
-        /* watch for GPS location updates periodically */
-        var self = this;
-
-        var geolocationError = function (error) {
-            self.set('gpserror', error);
-        };
-
-        var successWrapper = function (position) {
-            self.geolocationSuccess(position);
-        };
-
-        var options = 
-            { maximumAge: 1000, timeout: 3000, enableHighAccuracy: true };
-        var watchPositionId = navigator.geolocation.watchPosition(successWrapper, 
-                                            geolocationError, 
-                                            options);
+    centerMap: function () {
+        var pos = this.get('position');
+        var latlng = new google.maps.LatLng(pos.coords.latitude,
+                                            pos.coords.longitude);
+        this.get('map').setCenter( latlng );
     },
 
-    initGoogleMap: function () {
-        var mapOptions = {
-            center: new google.maps.LatLng(20.674226, -103.387363),
-            zoom: 16,
-            maxZoom: 18,
-            disableDefaultUI: true,
-            mapTypeId: google.maps.MapTypeId.ROADMAP,
-            zoomControl: false
-        };
-        var mapcanvasElem = document.getElementById("map-canvas");
-        if ( ! mapcanvasElem ) {
-            console.log('[error] MapController.initGoogleMap:' +
-                        'There is no DOM element #map-canvas.');
-        }
-        var map = new google.maps.Map(mapcanvasElem, mapOptions);
-        this.set('map', map);
-
-        /* Add device marker */
-
-        /*http://code.google.com/p/google-maps-utility-library-v3/wiki/Libraries*/
-        //TODO: Remove library and use custom marker (if only this is being used)
-        var GeoMarker = new GeolocationMarker();
-        GeoMarker.setCircleOptions({fillColor: '#808080'});
-        GeoMarker.setMap( this.get('map') );
-    }, /* initGoogleMap */
-
-    geolocationSuccess: function (position) {
-
-        // Update the map
-        if ( this.get('map') ) {
-            var latlng = new google.maps.LatLng(position.coords.latitude,
-                                                position.coords.longitude);
-            this.get('map').setCenter( latlng );
-        } else {
-            console.log('[error] IndexController.geolocationSuccess:' +
-                        'There is no map instance.');
-        }
-
-        function uploadPosition() {
-            //TODO: upload position to the server
-        }
-
-        uploadPosition(position);
-
+    formatPosition: function (position) {
         var formattedGeoPos = {
             timestamp: '0 / 0 / 0 - 00:00',
             coords: {
@@ -139,50 +95,172 @@ App.IndexController = Ember.Controller.extend({
                 heading: '0.0',
                 latitude: '0.000000',
                 longitude: '0.000000',
-                speed: '0'
+                speed: '0 km/hr'
             }
         };
 
-        var c = position.coords;                           /* Just a shurtcut */
-        var fc = formattedGeoPos.coords;                   /* Just a shurtcut */
+        // timestamp
+        var time = new Date( position.timestamp );
+        var options = {
+            weekday: "long", year: "numeric", month: "short",
+            day: "numeric", hour: "2-digit", minute: "2-digit"
+        };
+        formattedGeoPos.timestamp = time.toLocaleTimeString("es-mx", options);
 
+        // coords
+        var c = position.coords;
+        var fc = formattedGeoPos.coords;
+ 
         fc.accuracy = ( c.accuracy ? c.accuracy : fc.accuracy  ) + ' m'; 
         fc.altitude = ( c.altitude ? 
                         c.altitude.toFixed(2) : fc.altitude ) + ' m'; 
         fc.altitudeAccuracy = ( c.altitudeAccuracy ? 
                                 c.altitudeAccuracy : 
                                 fc.altitudeAccuracy  ) + ' m'; 
-        fc.heading = ( c.heading ? c.heading.toFixed(2) : fc.heading  ); 
+        fc.heading = ( c.heading ? c.heading.toFixed(2) : fc.heading  ) + '°'; 
         fc.latitude = c.latitude ? c.latitude.toFixed(6) : fc.latitude ; 
         fc.longitude = c.longitude ? c.longitude.toFixed(6) : fc.longitude ; 
         if ( c.speed ) {
-            var ms = c.speed.toFixed(2);
-            var kmhr = (ms * 3600) / 1000;
-            fc.speed = ms + ' m/s<br>' + kmhr + ' km/hr'; 
-        } else {
-            fc.speed = fc.speed + ' m/s';   
+            var ms = c.speed;
+            var kmhr =  ( (ms * 3600) / 1000 ).toFixed(2);
+            fc.speed = kmhr + ' km/hr';
+        } 
+
+        return formattedGeoPos;
+    },
+
+    geolocationSuccess: function (position) {
+        console.log('geolocationSuccess');
+        if ( ! this.get('map') ) {
+            console.log('[error] IndexController.geolocationSuccess:' +
+                        'There is no map instance.');
+            return;
         }
 
-        var time = new Date( position.timestamp );
-        var options = {
-            weekday: "long", year: "numeric", month: "short",
-            day: "numeric", hour: "2-digit", minute: "2-digit"
-        };
-        var date = time.toLocaleTimeString("es-mx", options);
-        this.set('timestamp', date);
+        this.set('position', position);
+
+        this.logPositionToServer(position);
+
+        var formattedGeoPos = this.formatPosition(position);
+        this.set('timestamp', formattedGeoPos.timestamp);
         this.set('coords', formattedGeoPos.coords);
+
+        this.updateMap();
     }, /* geolocationSuccess */
+
+    gpserror: {
+        message: null,
+        code: null,
+        PERMISSION_DENIED: null, 
+        POSITION_UNAVAILABLE: null, 
+        TIMEOUT: null
+    },
+
+    init: function () { 
+        this._super();
+
+        /* watch for GPS location updates periodically */
+        var self = this;
+
+        var geolocationError = function (error) {
+            console.log('geolocationError');
+            console.log(error);
+            self.set('gpserror', error);
+        };
+
+        var successWrapper = function (position) {
+            self.geolocationSuccess(position);
+        };
+
+        var options = 
+            { maximumAge: 1000, timeout: 3000, enableHighAccuracy: true };
+        navigator.geolocation.watchPosition(successWrapper, 
+                                            geolocationError, 
+                                            options);
+    },
+
+    initGoogleMap: function () {
+        var mapOptions = {
+            center: new google.maps.LatLng(20.674226, -103.387363),
+            zoom: 17,
+            //maxZoom: 18,
+            disableDefaultUI: true,
+            mapTypeId: google.maps.MapTypeId.ROADMAP,
+            zoomControl: false
+        };
+        var mapcanvasElem = document.getElementById("map-canvas");
+        if ( ! mapcanvasElem ) {
+            console.log('[error] IndexController.initGoogleMap: ' +
+                        'There is no DOM element #map-canvas.');
+        }
+        var map = new google.maps.Map(mapcanvasElem, mapOptions);
+        this.set('map', map);
+
+        var self = this;
+        google.maps.event.addListenerOnce(map, "tilesloaded", function () {
+            self.initGoogleMapComponents();
+        });
+    },
+
+    initGoogleMapComponents: function () {
+        console.log('initGoogleMapCtrls: tiles loaded');
+
+        var map = this.get('map');
+        var locMarker = GPSMap.Marker.createLocationArrow(map);
+        this.set('currLocMarker', locMarker);
+
+        var self = this;
+
+        var geolocateCtrl = GPSMap.Control.createGeolocate();
+        google.maps.event.addDomListener(geolocateCtrl, 'click', function() {
+            self.centerMap();
+        });
+        map.controls[google.maps.ControlPosition.RIGHT_BOTTOM]
+           .push(geolocateCtrl);
+        
+        this.updateMap();
+        this.centerMap();
+    }, /* initGoogleMapCtrls */
+
+    logPositionToServer: function () {
+        console.log('logPositionToServer');
+        //TODO: Log to server
+    },
 
     map: null,                                        /* google map reference */
 
     message: function () {
-        var err = this.get('model.gpserror');
+        var err = this.get('gpserror');
         if ( err && err.code ) {
             return err.message + ', code: ' + err.code;
         } else {
-            return 'ningun error';
+            return 'ok';
         }
-    }.property('gpserror')
+    }.property('gpserror'),
+
+    updateMap: function () {
+        console.log('updateMap');
+
+        var pos = this.get('position');
+        if ( ! pos ) {
+            console.log('[warning] IndexController.updateMap: ' +
+                        'There is no position.');
+            return;
+        }
+        console.log(pos.coords.latitude + ', ' + 
+                    pos.coords.longitude);
+
+        var locMarker = this.get('currLocMarker');
+        if ( ! locMarker ) {
+            console.log('[warning] IndexController.updateMap: ' +
+                        'There is no location marker.');
+            return;
+        }
+
+        locMarker.update(pos.coords.latitude,
+                         pos.coords.longitude,
+                         pos.coords.accuracy);
+    }
 
 }); /* IndexController */
 
@@ -231,13 +309,6 @@ var fixtureDefaultModel = {
         latitude: 90.000000,                               /* decimal degrees */
         longitude: 0.000000,                               /* decimal degrees */
         speed: 0                                                       /* m/s */ 
-    },
-    gpserror: {
-        message: null,
-        code: null,
-        PERMISSION_DENIED: null, 
-        POSITION_UNAVAILABLE: null, 
-        TIMEOUT: null
     }
 };
 
@@ -247,7 +318,5 @@ var fixtureDummyUser = {
     license: '987654321',
     plate: 'abc 123'
 };
-
-}; // configEmberApp
 
 /*EOF*/
