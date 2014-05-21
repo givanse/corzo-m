@@ -75,6 +75,8 @@ App.ApplicationController = Ember.Controller.extend({
  *             initGoogleMap()
  *                 tilesloaded
  *                     initGoogleMapCtrls()
+ *                        updateMap() 
+ *                        centerMap() 
  */
 App.IndexController = Ember.Controller.extend({
 
@@ -111,7 +113,8 @@ App.IndexController = Ember.Controller.extend({
         var c = position.coords;
         var fc = formattedGeoPos.coords;
  
-        fc.accuracy = ( c.accuracy ? c.accuracy : fc.accuracy  ) + ' m'; 
+        fc.accuracy = ( c.accuracy ? c.accuracy.toFixed(2) : 
+                                     fc.accuracy ) + ' m'; 
         fc.altitude = ( c.altitude ? 
                         c.altitude.toFixed(2) : fc.altitude ) + ' m'; 
         fc.altitudeAccuracy = ( c.altitudeAccuracy ? 

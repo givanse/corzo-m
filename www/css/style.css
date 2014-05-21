@@ -26,7 +26,7 @@ body,
     width: 100%;
     height: 100%;
     border: 1px solid black;
-    background-color: #253C32;
+    background-color: #E1C4EB;
 }
 
 /*TODO: custom map control */
@@ -99,19 +99,27 @@ div.data {
 /* Action bar */
 #actionbar {
     height: 128px;
-    background-color: #313131;
+    background-color: #1D2E1B;
     text-align: center;
     color: #ffffff;
     z-index: 8000;
 }
 
 #actionbar #button-wrapper {
-    border: 1px solid #a0a0a0;
-    border-width: 0px 1px 0px 0px;
     height: 100%;
+    position: relative;
+}
+
+#actionbar #button-overlay {
+    position: absolute; 
+    width: 100%; 
+    height: 100%; 
+    top: 0px;
+    left: 0px;
 }
 
 #actionbar select#driverstatus {
+    background-color: #b8b8b8;
     margin-top: 10px;
     width: 62%;
 }

@@ -27,16 +27,22 @@
 
             <div id="container-fulls" class="rtext">
                 <div id="actionbar" class="row">
-                   <div {{action 'toggleCtxMenu'}} id="button-wrapper" class="col-xs-3 col-md-1">
-                      <span class="glyphicon glyphicon-th"></span>
-                   </div>
-                   <div class="col-xs-9 col-md-11">
-                       <select id="driverstatus">
-                           <option>Disponible</option>
-                           <option>Inactivo</option>
-                           <option>Trabajando</option>
-                       </select>
-                   </div>
+                    <div id="button-wrapper" class="col-xs-3 col-md-1">
+                        <div style="width: 100%; height: 100%; margin: 0 auto;">
+                            <object>
+                                <embed src="img/ctx-menu.svg" style="width: 100%; height: 100%;"/>
+                            </object>
+                        </div>
+                        <div id="button-overlay" {{action 'toggleCtxMenu'}}></div>
+                    </div>
+
+                    <div class="col-xs-9 col-md-11">
+                        <select id="driverstatus">
+                            <option>Disponible</option>
+                            <option>Inactivo</option>
+                            <option>Trabajando</option>
+                        </select>
+                    </div>
                 </div>
 
                 <div id="content" class="row">
