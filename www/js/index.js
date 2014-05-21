@@ -65,7 +65,7 @@ App.ApplicationController = Ember.Controller.extend({
  *
  * IndexController
  *     init()
- *         watchPosition()          <- asynchronous
+ *         watchPosition()          <- asynchronous interval
  *             geolocationSuccess()
  *                 updateMap() 
  *
@@ -76,7 +76,6 @@ App.ApplicationController = Ember.Controller.extend({
  *                 tilesloaded
  *                     initGoogleMapCtrls()
  *                        updateMap() 
- *                        centerMap() 
  */
 App.IndexController = Ember.Controller.extend({
 
@@ -222,7 +221,6 @@ App.IndexController = Ember.Controller.extend({
            .push(geolocateCtrl);
         
         this.updateMap();
-        this.centerMap();
     }, /* initGoogleMapCtrls */
 
     logPositionToServer: function () {
@@ -244,14 +242,15 @@ App.IndexController = Ember.Controller.extend({
     updateMap: function () {
         console.log('updateMap');
 
-        var pos = this.get('position');
-        if ( ! pos ) {
+        var position = this.get('position');
+        if ( ! position ) {
             console.log('[warning] IndexController.updateMap: ' +
                         'There is no position.');
             return;
         }
-        console.log(pos.coords.latitude + ', ' + 
-                    pos.coords.longitude);
+        var lat = position.coords.latitude;
+        var lng = position.coords.longitude;
+        console.log(lat + ', ' + lng);
 
         var locMarker = this.get('currLocMarker');
         if ( ! locMarker ) {
@@ -260,9 +259,13 @@ App.IndexController = Ember.Controller.extend({
             return;
         }
 
-        locMarker.update(pos.coords.latitude,
-                         pos.coords.longitude,
-                         pos.coords.accuracy);
+        locMarker.update(lat, lng, 
+                         position.coords.accuracy,
+                         position.coords.heading);
+
+        if ( ! locMarker.isVisibleOnMap() ) {
+            this.centerMap();
+        }
     }
 
 }); /* IndexController */
