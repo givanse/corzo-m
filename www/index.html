@@ -15,7 +15,7 @@
     <body>
         
         <script type="text/x-handlebars">
-            <div id="contextmenu" class="rtext">
+            <div id="contextmenu">
                 <ul class="nav nav-pills nav-stacked">
                     {{ctx-menu-item routeName='index' displayName='Mapa'}}
                     {{ctx-menu-item routeName='monitor' displayName='Monitor GPS'}}
@@ -25,38 +25,30 @@
                 </ul>
             </div>
 
-            <div id="container-fulls" class="rtext">
-                <div id="actionbar" class="row">
-                    <div id="button-wrapper" class="col-xs-3 col-md-1">
-                        <div style="width: 100%; height: 100%; margin: 0 auto;">
-                            <object>
-                                <embed src="img/ctx-menu.svg" style="width: 100%; height: 100%;"/>
+            <div id="container-fulls">
+                <div id="actionbar">
+                    <div id="button-wrapper" class="">
+                        <div id="svg-wrapper">
+                            <object id="svg-obj">
+                                <embed src="img/ctx-menu.svg" style="height: 100%;"/>
                             </object>
+                            <div id="svg-overlay"></div>
                         </div>
-                        <div id="button-overlay" {{action 'toggleCtxMenu'}}></div>
                     </div>
 
-                    <div class="col-xs-9 col-md-11">
-                        <select id="driverstatus">
-                            <option>Disponible</option>
-                            <option>Inactivo</option>
-                            <option>Trabajando</option>
-                        </select>
+                    <div id="driverstatus">
+                        <div class="select" {{action 'selectStatus'}}>
+                            {{driverStatus}}
+                        </div>
                     </div>
+
+                    <div style="clear: both;"></div>
                 </div>
 
                 <div id="content" class="row">
                     {{outlet}}
                 </div>
             </div>
-        </script>
-
-        <script type="text/x-handlebars" id="components/ctx-menu-item">
-            {{#link-to routeName animations="main:slideOverUp"}}
-                <div {{action 'click'}}>
-                    {{displayName}}
-                </div>
-            {{/link-to}}
         </script>
 
         <script type="text/x-handlebars" id="account">
@@ -83,7 +75,7 @@
             {{data-row title='Tiempo' data=timestamp}}
             {{data-row title='Precisión' data=coords.accuracy}}
             {{data-row title='Altitud' data=coords.altitude}}
-            {{data-row title='Altitud precisión' data=coords.altitudeAccuracy}}
+            {{data-row title='Altitud P.' data=coords.altitudeAccuracy}}
             {{data-row title='Dirección' data=coords.heading}}
             {{data-row title='Latitud' data=coords.latitude}}
             {{data-row title='Longitud' data=coords.longitude}}
@@ -98,6 +90,12 @@
             {{data-row title='Ocultar direcciones de servicio' data='si'}}
         </script>
 
+        <script type="text/x-handlebars" id="components/ctx-menu-item">
+            {{#link-to routeName animations="main:slideOverUp"}}
+                {{displayName}}
+            {{/link-to}}
+        </script>
+
         <script type="text/x-handlebars" id="components/data-row">
             <div class='data-row'>
                 <div class='title'>{{title}}</div>
@@ -106,7 +104,7 @@
             </div>
         </script>
 
-        <!--script type="text/javascript" src="phonegap.js"></script-->
+        <script type="text/javascript" src="phonegap.js"></script>
         <script src="js/libs/jquery-1.10.2.js"></script>
         <script src="js/libs/handlebars-1.1.2.js"></script>
         <script src="js/libs/ember-1.5.1.js"></script>

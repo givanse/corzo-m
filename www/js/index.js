@@ -15,9 +15,9 @@ var phonegap = {
     // 'load', 'deviceready', 'offline', and 'online'.
     bindEvents: function () {
         // Phone
-        //document.addEventListener('deviceready', this.onDeviceReady, false);
+        document.addEventListener('deviceready', this.onDeviceReady, false);
         // Desktop
-        $(document).ready(function() { phonegap.onDeviceReady(); });
+        //$(document).ready(function() { phonegap.onDeviceReady(); });
     },
     onDeviceReady: function () {
         App.advanceReadiness();
@@ -53,11 +53,13 @@ App.MonitorRoute = Ember.Route.extend({
 /* Controllers */
 
 App.ApplicationController = Ember.Controller.extend({
-  actions: {
-    toggleCtxMenu: function (evt) {
-        $("#contextmenu").animate({width: 'toggle'});
+    driverStatus: 'Inactivo', 
+    actions: {
+        selectStatus: function () {
+            var sel = $("#driverstatus .select");
+            sel.addClass("select-touched");
+        }
     }
-  }
 });
 
 /**
@@ -129,7 +131,7 @@ App.IndexController = Ember.Controller.extend({
         } 
 
         return formattedGeoPos;
-    },
+    }, /* formatPosition */
 
     geolocationSuccess: function (position) {
         console.log('geolocationSuccess');
@@ -184,8 +186,7 @@ App.IndexController = Ember.Controller.extend({
     initGoogleMap: function () {
         var mapOptions = {
             center: new google.maps.LatLng(20.674226, -103.387363),
-            zoom: 17,
-            //maxZoom: 18,
+            zoom: 18,
             disableDefaultUI: true,
             mapTypeId: google.maps.MapTypeId.ROADMAP,
             zoomControl: false
@@ -225,7 +226,7 @@ App.IndexController = Ember.Controller.extend({
 
     logPositionToServer: function () {
         console.log('logPositionToServer');
-        //TODO: Log to server
+        //TODO
     },
 
     map: null,                                        /* google map reference */
@@ -275,7 +276,27 @@ App.IndexController = Ember.Controller.extend({
  */
 
 App.ApplicationView = Ember.View.extend({
-    classNames: ['ember-fulls-view']
+    classNames: ['ember-fulls-view'],
+    didInsertElement: function () {
+        var embed = document.querySelector("#svg-obj embed");
+        var overlay = $("#svg-overlay");
+
+        embed.onload = function () {
+            var rect = this.getSVGDocument().querySelector("svg rect");
+
+            // TODO: make this work, for now the overlay div is the workaround
+            //$(rect).trigger("touchstart");
+
+            overlay.on("touchstart", function () {
+                $(rect).attr("class", "touched");
+            });
+
+            overlay.on("touchend", function () {
+                $(rect).attr("class", "normal");
+                $("#contextmenu").animate({width: 'toggle'});
+            });
+        }; /* embed.onload */
+    } /* didInsertElement */
 });
 
 App.MonitorView = App.IndexView = Ember.View.extend({
@@ -294,13 +315,22 @@ App.MonitorView = App.IndexView = Ember.View.extend({
  */
 
 App.CtxMenuItemComponent = Ember.Component.extend({
-  tagName: 'li',
-  actions: {
-    click: function (evt) {
-        // hide the context menu
-        $("#contextmenu").animate({width: 'toggle'});
+    tagName: 'li',
+    didInsertElement: function () {
+        var li = this.get('element');
+        var a = $(li).find('a');
+
+        $(a).on("touchstart", function (e) { 
+            $(a).addClass("touched");
+        });
+
+        $(a).on("touchend", function (e) { 
+            $(a).removeClass("touched");
+            $("#contextmenu").animate({width: 'toggle'});
+            // TODO: review why this is not triggered automatically
+            $(this).trigger("click");
+        });
     }
-  }
 });
 
 /* Fixtures */

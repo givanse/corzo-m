@@ -1,11 +1,39 @@
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 100 100" 
      preserveAspectRatio="xMinYMin meet">
-    <rect x="4" y="4" rx="3" ry="3" width="96" height="94"
-          style="fill:#b8b8b8; stroke: black; stroke-width: 1;" />
-    <line x1="19" y1="30" x2="85" y2="30" 
-          style="stroke:#1D2E1B; stroke-width:10" />
-    <line x1="19" y1="50" x2="85" y2="50" 
-          style="stroke:#1D2E1B; stroke-width:10" />
-    <line x1="19" y1="70" x2="85" y2="70" 
-          style="stroke:#1D2E1B; stroke-width:10" />
+    <defs>
+        <style type="text/css">
+            #base {
+                stroke: black; 
+                stroke-width: 1;
+            }
+            .normal {
+                fill: #b8b8b8; 
+            }
+            .touched {
+                fill: #ffffff; 
+            }
+            .line {
+                stroke:#1D2E1B; 
+                stroke-width: 8;
+            }
+        </style>
+        <script type="text/javascript">
+            function tstart(evt, elem) {
+                elem.setAttribute("class", "touched");
+            }
+            function tend(evt, elem) {
+                elem.setAttribute("class", "normal");
+            }
+        </script>
+    </defs>
+
+    <rect id="base" class="normal"
+          x="4" y="4" rx="5" ry="5" width="96" height="94"
+          ontouchstart="tstart(evt, this);" 
+          ontouchend="tend(evt, this);" />
+
+    <line x1="19" y1="30" x2="85" y2="30" class="line"/>
+    <line x1="19" y1="50" x2="85" y2="50" class="line"/> 
+    <line x1="19" y1="70" x2="85" y2="70" class="line"/>
+
 </svg>
