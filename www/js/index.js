@@ -14,10 +14,7 @@ var phonegap = {
     // Bind any events that are required on startup. Common events are:
     // 'load', 'deviceready', 'offline', and 'online'.
     bindEvents: function () {
-        // Phone
         document.addEventListener('deviceready', this.onDeviceReady, false);
-        // Desktop
-        //$(document).ready(function() { phonegap.onDeviceReady(); });
     },
     onDeviceReady: function () {
         App.advanceReadiness();
@@ -53,13 +50,7 @@ App.MonitorRoute = Ember.Route.extend({
 /* Controllers */
 
 App.ApplicationController = Ember.Controller.extend({
-    driverStatus: 'Inactivo', 
-    actions: {
-        selectStatus: function () {
-            var sel = $("#driverstatus .select");
-            sel.addClass("select-touched");
-        }
-    }
+    driverStatus: 'Inactivo' 
 });
 
 /**
@@ -278,6 +269,10 @@ App.IndexController = Ember.Controller.extend({
 App.ApplicationView = Ember.View.extend({
     classNames: ['ember-fulls-view'],
     didInsertElement: function () {
+
+        /**
+         * Context menu SVG button
+         */
         var embed = document.querySelector("#svg-obj embed");
         var overlay = $("#svg-overlay");
 
@@ -296,6 +291,27 @@ App.ApplicationView = Ember.View.extend({
                 $("#contextmenu").animate({width: 'toggle'});
             });
         }; /* embed.onload */
+
+        /**
+         * Select status 
+         */
+        var sel = $("#driverstatus .select");
+        sel.on("touchstart", function () {
+            sel.addClass("select-touched");
+        });
+        sel.on("touchend", function () {
+            sel.removeClass("select-touched");
+            var buttonLabels = [];
+            buttonLabels[0] = "Libre";
+            buttonLabels[1] = "Trabajando";
+            buttonLabels[2] = "Ocupado";
+            function handleStatusChange(buttonIndex) {
+                //TODO
+            };
+            navigator.notification.confirm(" ", null, "Confirmar Estado Nuevo", 
+                                           buttonLabels);
+        });
+        
     } /* didInsertElement */
 });
 

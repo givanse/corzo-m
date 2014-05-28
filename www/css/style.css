@@ -46,7 +46,7 @@ div.data-row {
 
 div.title, div.data {
     float: left;
-    padding: 4px 8px;
+    padding: 0 0.2em;
 }
 
 div.title {
