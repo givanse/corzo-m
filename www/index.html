@@ -55,10 +55,18 @@
         </script>
 
         <script type="text/x-handlebars" id="account">
-            {{data-row title='Nombre' data=model.name}}
-            {{data-row title='Celular' data=model.cellphone}}
-            {{data-row title='Licencia' data=model.license}}
-            {{data-row title='Vehiculo' data=model.plate}}
+            <h2>Usuario</h2>
+            {{data-row title='Nombre' data=user.name}}
+            {{data-row title='Celular' data=user.cellphone}}
+            {{data-row title='Licencia' data=user.license}}
+            {{data-row title='Vehiculo' data=user.plate}}
+            <h2>Equipo</h2>
+            {{data-row title='Cordova' data=device.cordova}}
+            {{data-row title='Model' data=device.model}}
+            {{data-row title='Name' data=device.name}}
+            {{data-row title='Platform' data=device.platform}}
+            {{data-row title='UUID' data=device.uuid}}
+            {{data-row title='Version' data=device.version}}
         </script>
 
         <script type="text/x-handlebars" id="current_task">

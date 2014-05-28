@@ -32,7 +32,15 @@ App.Router.map(function() {
 
 App.AccountRoute = Ember.Route.extend({
     model: function() {
-        return fixtureDummyUser;
+        var fixtureDummyUser = {
+            name: 'Enrique P. Nieto',
+            cellphone: '33 1234 0000',
+            license: '987654321',
+            plate: 'abc 123'
+        };
+
+        return { user: fixtureDummyUser,
+                 device: device };
     }
 });
 
@@ -392,13 +400,6 @@ var fixtureDefaultModel = {
         longitude: 0.000000,                               /* decimal degrees */
         speed: 0                                                       /* m/s */ 
     }
-};
-
-var fixtureDummyUser = {
-    name: 'Juan Camaney',
-    cellphone: '33 1234 0000',
-    license: '987654321',
-    plate: 'abc 123'
 };
 
 /*EOF*/
