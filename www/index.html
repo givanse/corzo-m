@@ -20,8 +20,11 @@
                     {{ctx-menu-item routeName='index' displayName='Mapa'}}
                     {{ctx-menu-item routeName='monitor' displayName='Monitor GPS'}}
                     {{ctx-menu-item routeName='account' displayName='Mi Cuenta'}}
-                    {{ctx-menu-item routeName='preferences' displayName='Preferencias'}}
-                    {{ctx-menu-item routeName='' displayName='Salir'}}
+                    {{#view "App.ExitView"}}
+                        {{#link-to ""}}
+                           Salir 
+                        {{/link-to}}
+                    {{/view}}
                 </ul>
             </div>
 
@@ -97,11 +100,9 @@
         </script>
 
         <script type="text/x-handlebars" id="components/data-row">
-            <div class='data-row'>
-                <div class='title'>{{title}}</div>
-                <div class='data'>{{data}}</div>
-                <div style='clear: both;'></div>
-            </div>
+            <div class='title'>{{title}}</div>
+            <div class='data'>{{data}}</div>
+            <div style='clear: both;'></div>
         </script>
 
         <script type="text/javascript" src="phonegap.js"></script>

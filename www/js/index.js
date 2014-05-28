@@ -299,6 +299,9 @@ App.ApplicationView = Ember.View.extend({
         sel.on("touchstart", function () {
             sel.addClass("select-touched");
         });
+        sel.on("touchleave", function () {
+            sel.removeClass("select-touched");
+        });
         sel.on("touchend", function () {
             sel.removeClass("select-touched");
             var buttonLabels = [];
@@ -313,6 +316,25 @@ App.ApplicationView = Ember.View.extend({
         });
         
     } /* didInsertElement */
+});
+
+App.ExitView = Ember.View.extend({
+    tagName: 'li',
+    click: function () {
+        navigator.app.exitApp();
+    },
+    didInsertElement: function () {
+        var li = this.get('element');
+        var a = $(li).find('a');
+
+        $(a).on("touchstart", function (e) { 
+            $(a).addClass("touched");
+        });
+
+        $(a).bind("touchcancel touchleave", function (e) { 
+            $(a).removeClass("touched");
+        });
+    }
 });
 
 App.MonitorView = App.IndexView = Ember.View.extend({
@@ -340,13 +362,21 @@ App.CtxMenuItemComponent = Ember.Component.extend({
             $(a).addClass("touched");
         });
 
+        $(a).bind("touchcancel touchleave", function (e) { 
+            $(a).removeClass("touched");
+        });
+
         $(a).on("touchend", function (e) { 
             $(a).removeClass("touched");
             $("#contextmenu").animate({width: 'toggle'});
-            // TODO: review why this is not triggered automatically
-            $(this).trigger("click");
+            a.trigger("click");
         });
-    }
+    } /* didInsertElement */
+});
+
+App.DataRowComponent = Ember.Component.extend({
+    tagName: 'div',
+    className: ['data-row']
 });
 
 /* Fixtures */
